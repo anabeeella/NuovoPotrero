@@ -1,35 +1,78 @@
-var cycle;
+var cycle = null;
+var started = false;
+
+var letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
+var numbers = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ];
+var colors =  [ "red", "yellow", "green", "blue" ];
 
 // Get the modal
-var modal = document.getElementById("myModal");
+var modal = new bootstrap.Modal(document.getElementById('modal'), {});
+var modalEle = document.getElementById('modal');
+var modalBtn = document.querySelector('#modal .btn-close');
+var slider = document.querySelector("#slider");
+var sliderInner = document.querySelector("#slider .carousel-inner");
+modalBtn.onclick = forceStop;
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+function getSlides(amount = 0, array = []) {
+  if(array === [] || amount <= 0) return [];
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
+  var chosen = [];
+  for (var i = 0; i < amount; i++) {
+    var randomIndex = Math.floor(Math.random() * array.length);
+    chosen.push(array[randomIndex]);
+  }
+  return chosen;
 }
 
-
-
-
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
+function createSlides(slides = [], slideTime = 3000) {
+  var carousel = bootstrap.Carousel.getInstance(slider);
+  slides.forEach(function(item, index) {
+    var isColor = colors.indexOf(item) !== -1;
+    var isFirst = index === 0;
+    var slideHTML = "<div data-bs-interval='" + slideTime + "' class='carousel-item " + (isFirst ? "active" : "") + "'><div class='slide " + (isColor ? "is-color is-" + item : "")  + "'>" + item + "</div></div>";
+    sliderInner.insertAdjacentHTML("beforeend", slideHTML);
+  });
+  carousel.to(0);
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+function forceStop() {
+  clearTimeout(cycle);
+  document.getElementById('modal').style.display = "none";
+  sliderInner.innerHTML = "";
+}
+
+function start() {
+  // Config Values
+  var showColors = document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true';
+  var showNumbers = document.querySelector("#show-numbers").checked;
+  var showLetters = document.querySelector("#show-letters").checked;
+
+  // Time values
+  var amount = document.querySelector("#amount").value;
+  var stimulus = document.querySelector("#stimulus").value * 1000;
+  var interval = document.querySelector("#interval").value;
+  var totalAmount = amount * stimulus;
+
+  if(showColors || showNumbers || showLetters) {
+    // Starting
+    var randomStack = [];
+    if(showColors) {
+      document.querySelectorAll(".btn-check.color").forEach(function(ele){
+        if(ele.checked) randomStack.push(ele.value);
+      })
+    }
+    if(showNumbers) randomStack = randomStack.concat(numbers);
+    if(showLetters) randomStack = randomStack.concat(letters);
+
+    var selectedSlides = getSlides(amount, randomStack);
+    createSlides(selectedSlides, stimulus);
+    modalEle.style.display = "block";
+
+    cycle = setTimeout(function() {
+      forceStop();
+    }, totalAmount);
   }
 }
-
 
 
 // Get the button that opens manual configuration

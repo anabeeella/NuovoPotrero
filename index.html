@@ -10,8 +10,8 @@
     <title>Nuovo Potrero</title>
 </head>
 <body>
-    <header class="container text-center p-5">
-        <h1 class="animated backInDown display-4">Nuovo Potrero</h1>
+    <header class="container py-3">
+        <h1 class="animated backInDown text-center display-4">Nuovo Potrero</h1>
     </header>
     <main class="container-fluid text-center">
         <section>
@@ -24,29 +24,29 @@
             </article>
             <article class="mb-5"  id="options-configuration">
                 <p class="fs-5">Configuración</p>
-                <input type="radio" class="btn-check" name="options-config" id="config-auto" checked>
-                <label class="btn btn-outline-dark m-2" for="config-auto">Automática</label>
-                <input type="radio" class="btn-check" name="options-config" id="config-manual">
+                <input type="radio" class="btn-check" name="options-config" id="config-manual" checked>
                 <label class="btn btn-outline-dark m-2" for="config-manual" onclick="showConfig()">Manual</label>
+                <input type="radio" class="btn-check" name="options-config" id="config-auto">
+                <label class="btn btn-outline-dark m-2" for="config-auto">Automática</label>
             </article>
             <article class="px-5 py-3 mb-5 border border-dark col-lg-6 m-auto rounded-3">
                 <div class="mb-3">
                     <p><strong>Mostrar:</strong></p>
-                    <button data-bs-toggle="collapse" data-bs-target="#colorWrapper" role="button" class="btn btn-outline-dark m2">Colores</button>
-                    <input type="checkbox" class="btn-check" name="show-numbers" id="show-numbers">
+                    <button data-bs-toggle="collapse" data-bs-target="#colorWrapper" role="button" id="show-colors" class="btn btn-outline-dark m-2" aria-expanded="false">Colores</button>
+                    <input type="checkbox" class="btn-check" id="show-numbers">
                     <label class="btn btn-outline-dark m-2" for="show-numbers">Números</label>
-                    <input type="checkbox" class="btn-check" name="show-letters" id="show-letters">
+                    <input type="checkbox" class="btn-check" id="show-letters">
                     <label class="btn btn-outline-dark m-2" for="show-letters">Letras</label>
                 </div>
                 <div class="collapse mb-3" id="colorWrapper">
                     <p><strong>Seleccionar colores:</strong></p>
-                    <input type="checkbox" class="btn-check" name="colors-config" id="red">
+                    <input class="btn-check color" value="red" id="red" type="checkbox" checked>
                     <label class="btn btn-outline-danger m-2 p-4" for="red"></label>
-                    <input type="checkbox" class="btn-check" name="colors-config" id="yellow">
+                    <input class="btn-check color" value="yellow" id="yellow" type="checkbox" checked>
                     <label class="btn btn-outline-warning m-2 p-4" for="yellow"></label>
-                    <input type="checkbox" class="btn-check" name="colors-config" id="green">
+                    <input class="btn-check color" value="green" id="green" type="checkbox" checked>
                     <label class="btn btn-outline-success m-2 p-4" for="green"></label>
-                    <input type="checkbox" class="btn-check" name="colors-config" id="blue">
+                    <input class="btn-check color" value="blue" id="blue" type="checkbox" checked>
                     <label class="btn btn-outline-primary m-2 p-4" for="blue"></label>
                 </div>
                 <div id="set-duration" class="mb-3">
@@ -54,37 +54,43 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="amount">Cantidad de Estímulos: </label>
-                                <input type="time" id="amount" class="duration-estimulo d-inline form-control">
+                                <label for="amount">Cantidad de Estímulos</label>
+                                <input type="number" id="amount" value="0" min="0" class="duration-estimulo d-inline form-control">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="stimulus">Estímulo: </label>
-                                <input type="time" id="stimulus" class="duration-estimulo d-inline form-control">
+                                <label for="stimulus">Estímulo en segundos: </label>
+                                <input type="number" min="0" id="stimulus" class="duration-estimulo d-inline form-control">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="interval">Intervalo: </label>
-                                <input type="time" id="interval" class="duration-estimulo d-inline form-control">
+                                <label for="interval">Intervalo en segundos: </label>
+                                <input type="number" min="0" id="interval" class="duration-estimulo d-inline form-control">
                             </div>
                         </div>
                     </div>
                 </div>
             </article>
             <!-- Trigger/Open The Modal -->
-            <button class="animated wobble btn btn-success mt-5 fs-5" id="myBtn">Empezar</button>
+            <button class="animated wobble btn btn-success mt-3 fs-5" onclick="start();">Empezar</button>
         </section>
-        <div id="myModal" class="modal">
-        <!-- Modal content -->
+        <div id="modal" class="modal show" data-bs-ride="modal">
+            <button data-bs-dismiss="modal" class="btn-close"></button>
+            <!-- Modal content -->
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <div id="modalBody">
+                    <div id="slider" class="carousel" data-bs-ride="carousel">
+                        <div class="carousel-inner"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/code.js"></script>
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/code.js"></script>
 </body>
 </html>

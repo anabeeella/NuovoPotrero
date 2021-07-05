@@ -2,3 +2,71 @@
     background-color: var(--bs-dark);
     color: var(--bs-white);
 }
+
+/* Modal */
+
+.modal {
+    height: 100;
+    border-radius: 0;
+}
+
+.modal .close{
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.modal-content {
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    border: 0;
+}
+
+.modal-content #slider {
+    width: 100%;
+    height: 100%;
+}
+
+
+.modal .btn-close  {
+    position: relative;
+    z-index: 5;
+}
+
+#slider .slide {
+    text-align: center;
+    font-size: 90vh;
+    color: #000;
+    font-weight: 700;
+    line-height: 100vh;
+}
+
+#slider .slide.is-color {
+    font-size: 0;
+}
+
+#slider .slide.is-color.is-red {
+    background-color: var(--bs-red);
+}
+
+#slider .slide.is-color.is-yellow {
+    background-color: var(--bs-yellow);
+}
+
+#slider .slide.is-color.is-green {
+    background-color: var(--bs-green);
+}
+
+#slider .slide.is-color.is-blue {
+    background-color: var(--bs-blue);
+}
+
+.carousel-item {
+    transition: opacity 230ms ease;
+    opacity: 0;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}

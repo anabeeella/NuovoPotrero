@@ -39,6 +39,9 @@ let hideConfig = document.getElementById("config-auto");
 // Get the manual configuration content
 let setConfig = document.getElementById("config-manual-detail");
 
+let setColors = document.getElementById("show-colors");
+let selectColors = document.getElementById("select-colors")
+
 // When the user clicks on "Manual" open content
 config.onclick = function() {
   if (config.style.display = "none") {
@@ -50,5 +53,11 @@ config.onclick = function() {
 hideConfig.onclick = function() {
   if (config.style.display = "block") {
     setConfig.style.display = "none"
+  }
+}
+
+setColors.onclick = function() {
+  if (selectColors.style.display = "none") {
+    selectColors.style.display = "block"
   }
 }

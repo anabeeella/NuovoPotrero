@@ -30,19 +30,8 @@
     border: 1px solid #888;
     width: 100%; /* Could be more or less, depending on screen size */
     height: 100%; /* Full height */
-    -webkit-animation: randon 20s infinite;
-    animation: randon 20s infinite;
   }
 
-  @keyframes  randon {
-    16% { background-color: red; } 
-    32% { background-color: yellow; }
-    48% { background-color: orange; } 
-    64% { background-color: green; } 
-    80% { background-color: blue; }
-    96% { background-color: purple; } 
-  }  
-   
   
   /* The Close Button */
   .close {
@@ -59,7 +48,7 @@
     cursor: pointer;
   }
 
-  #config-manual-detail {
+  #config-manual-detail, #select-colors {
     display: none;
   }
 
@@ -67,3 +56,26 @@
   #set-duration .duration-estimulo {
     width: 100px;
   }
+
+
+
+label.orange {
+    border-color: orange;
+  }
+
+label.orange:hover, label.orange:checked {
+  color: #fff;
+  background-color: orange;
+  border-color: orange;
+  }
+
+  
+label.purple {
+  border-color: purple;
+}
+
+label.purple:hover, label.purple:checked{
+color: #fff;
+background-color: purple;
+border-color: purple;
+}

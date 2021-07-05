@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animate/css/bootstrap.css">
+    <link rel="stylesheet" href="animate/animate.css/source/animate.css">
+    <script defer src="code.js"></script>
+    <title>Nuovo Potrero</title>
+</head>
+<body>
+    <header class="container text-center p-5">
+        <h1 class="animated backInDown display-4">Nuovo Potrero</h1>
+    </header>
+    <main class="container-fluid text-center">
+        <section>
+            <article class="mb-5" id="number-of-screen">
+                <p class="fs-5">Número de pantallas</p>
+                <input type="radio" class="btn-check" name="options-outlined" id="one-screen" autocomplete="off" checked>
+                <label class="btn btn-outline-dark m-2" for="one-screen">1</label>
+                <input type="radio" class="btn-check" name="options-outlined" id="two-screen" autocomplete="off">
+                <label class="btn btn-outline-dark m-2" for="two-screen">2</label>
+            </article>
+            <article class="mb-5"  id="options-configuration">
+                <p class="fs-5">Configuración</p>
+                <input type="radio" class="btn-check" name="options-config" id="config-auto" autocomplete="off"   checked>
+                <label class="btn btn-outline-dark m-2" for="config-auto">Automática</label>
+                <input type="radio" class="btn-check" name="options-config" id="config-manual" autocomplete="off">
+                <label class="btn btn-outline-dark m-2" for="config-manual" onclick="showConfig()">Manual</label>
+            </article>
+            <article class="p-2 mb-5 border border-dark col-lg-6 m-auto rounded-3" id="config-manual-detail">
+                <div class="m-3">
+                    <p><strong>Seleccionar colores:</strong></p>
+                    <input type="checkbox" class="btn-check" name="colors-config" id="color-red" autocomplete="off">
+                    <label class="btn btn-outline-danger m-2 p-4" for="color-red"></label>
+                    <input type="checkbox" class="btn-check" name="colors-config" id="color-yellow" autocomplete="off">
+                    <label class="btn btn-outline-warning m-2 p-4" for="color-yellow"></label>
+                    <input type="checkbox" class="btn-check" name="colors-config" id="color-green" autocomplete="off">
+                    <label class="btn btn-outline-success m-2 p-4" for="color-green"></label>
+                    <input type="checkbox" class="btn-check" name="colors-config" id="color-blue" autocomplete="off">
+                    <label class="btn btn-outline-primary m-2 p-4" for="color-blue"></label>
+                </div>
+                <div class="mb-3">
+                    <p><strong>Mostrar:</strong></p>
+                    <input type="checkbox" class="btn-check" name="show-numbers" id="show-numbers" autocomplete="off">
+                    <label class="btn btn-outline-dark m-2" for="show-numbers">Números</label>
+                    <input type="checkbox" class="btn-check" name="show-letters" id="show-letters" autocomplete="off">
+                    <label class="btn btn-outline-dark m-2" for="show-letters">Colores</label>
+                </div>
+                <div id="set-duration" class="mb-3">
+                    <p><strong>Duración:</strong></p>
+                    <label for="duration1">Estímulo: </label><input type="time" id="duration1" class="m-3 duration-estimulo d-inline form-control">
+                    <label for="duration2">Intervalo: </label><input type="time" id="duration2" class="m-3 duration-estimulo d-inline form-control">
+                    <label for="duration3"><strong>Total:</strong></label><input type="time" id="duration4" class="m-3 duration-estimulo d-inline form-control">
+                </div>
+            </article>
+            <div class="mb-5">
+            </div>
+            <!-- Trigger/Open The Modal -->
+            <button class="animated wobble btn btn-success mt-5 fs-5" id="myBtn">Empezar</button>
+        </section>
+        <section id="section-1" class="text-white p-5">
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+            <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p></p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

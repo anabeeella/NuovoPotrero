@@ -1,0 +1,22 @@
+
+div.bounce {
+    width:50px;
+    height:50px;
+    padding:20px;
+    text-align:center;
+    background:#fc0;
+    position:relative;
+    -webkit-animation:bounce 1s ease-in 2s 10 alternate; /* Safari & Chrome */
+    animation:bounce 1s ease-in 2s 10 alternate; /* W3C */
+}
+
+@keyframes bounce {
+	from {
+	  top: 20px;
+	  left:0px;
+	  }
+	to {
+	  top: 150px;
+	  left:150px;
+	}
+}

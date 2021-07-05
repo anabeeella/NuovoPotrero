@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuovo Potrero</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="animate.css/source/animate.css">
+    <style>
+    #section-1 {
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        -webkit-animation: random 20s infinite;
+        animation: random 20s infinite;
+    }
+    @keyframes  random {
+        16% { background-color: red; } 
+        32% { background-color: yellow; }
+        48% { background-color: orange; } 
+        64% { background-color: green; } 
+        80% { background-color: blue; }
+        96% { background-color: purple; }  
+     }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animated slideInDown text-center bg-primary text-white p-5">
+            <h1 class="display-4">Nuovo Potrero</h1>
+        </header>
+        <section id="section-1" class="animated slideInRight text-white p-5">
+            <h1 id="anim-head">Seleccionar Colores</h1>
+
+            <p id="anim-body" class="text-white"></p>
+            <button id="animateBtn" class="btn btn-primary">Empezar</button>
+
+        </section>
+    </div>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $("#animateBtn").click(function(){
+                animate("#anim-head", "bounce");
+
+                return false;
+            })
+            function animate(element, animation){
+                $(element).addClass("animated "+animation)
+                var wait = setTimeout(function(){
+                    $(element).removeClass("animated "+animation);
+                }, 1000);
+            }
+        })
+    </script>
+</body>
+</html>

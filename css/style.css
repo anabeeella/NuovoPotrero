@@ -1,0 +1,4 @@
+.btn-outline-dark[aria-expanded="true"] {
+    background-color: var(--bs-dark);
+    color: var(--bs-white);
+}

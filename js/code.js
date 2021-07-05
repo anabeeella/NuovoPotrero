@@ -1,3 +1,5 @@
+var cycle;
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -47,7 +49,7 @@ config.onclick = function() {
   if (config.style.display = "none") {
     setConfig.style.display = "block"
   }
-} 
+}
 
 // When the user clicks on "Automática", close it
 hideConfig.onclick = function() {

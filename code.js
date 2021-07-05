@@ -12,6 +12,10 @@ btn.onclick = function() {
   modal.style.display = "block";
 }
 
+
+
+
+
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
@@ -23,6 +27,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
 
 
 // Get the button that opens manual configuration

@@ -9,8 +9,7 @@ const colors =  [ "red", "yellow", "green", "blue", "purple", "orange" ];
 const modal = new bootstrap.Modal(document.getElementById('modal'), {});
 const modalEle = document.getElementById('modal');
 const modalBtn = document.querySelector('#modal .btn-close');
-const slider = document.querySelector("#slider");
-const sliderInner = document.querySelector("#slider .carousel-inner");
+const modalBody = document.querySelector('#modalBody');
 const tabs = document.querySelector("#tabs");
 modalBtn.onclick = forceStop;
 
@@ -31,21 +30,23 @@ function getSlides(amount = 0, array = []) {
 }
 
 function createSlides(slides = [], slideTime = 3000) {
-  var carousel = bootstrap.Carousel.getInstance(slider);
+  var slidesHTML = '<div id="slider" class="carousel" data-bs-ride="carousel"><div class="carousel-inner">';
   slides.forEach(function(item, index) {
     var isColor = colors.indexOf(item) !== -1;
     var isFirst = index === 0;
-    var slideHTML = "<div data-bs-interval='" + slideTime + "' class='carousel-item " + (isFirst ? "active" : "") + "'><div class='slide " + (isColor ? "is-color is-" + item : "")  + "'>" + item + "</div></div>";
-    sliderInner.insertAdjacentHTML("beforeend", slideHTML);
+    slidesHTML += "<div data-bs-interval='" + slideTime + "' class='carousel-item " + (isFirst ? "active" : "") + "'><div class='slide " + (isColor ? "is-color is-" + item : "")  + "'>" + item + "</div></div>";
   });
-  carousel.to(0);
+  slidesHTML += "</div></div>";
+  console.log(slidesHTML);
+  modalBody.insertAdjacentHTML("beforeend", slidesHTML);
+  bootstrap.Carousel.getOrCreateInstance(document.querySelector('#modal .carousel'));
 }
 
 function forceStop() {
   clearTimeout(cycle);
   started = false;
   document.getElementById('modal').style.display = "none";
-  sliderInner.innerHTML = "";
+  modalBody.innerHTML = "";
 }
 
 function start() {
@@ -69,10 +70,10 @@ function start() {
   const amount = initType === "manual"
     ? document.querySelector("#amount").value
     : 15;
+
   const stimulus = initType === "manual"
     ? document.querySelector("#stimulus").value * 1000
     : 4 * 1000;
-  // const interval = document.querySelector("#interval").value;
 
   var totalAmount = amount * stimulus;
 

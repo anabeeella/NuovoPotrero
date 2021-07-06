@@ -1,16 +1,17 @@
-var cycle = null;
-var started = false;
+let cycle = null;
+let started = false;
 
-var letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
-var numbers = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ];
-var colors =  [ "red", "yellow", "green", "blue" ];
+const letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
+const numbers = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ];
+const colors =  [ "red", "yellow", "green", "blue" ];
 
 // Get the modal
-var modal = new bootstrap.Modal(document.getElementById('modal'), {});
-var modalEle = document.getElementById('modal');
-var modalBtn = document.querySelector('#modal .btn-close');
-var slider = document.querySelector("#slider");
-var sliderInner = document.querySelector("#slider .carousel-inner");
+const modal = new bootstrap.Modal(document.getElementById('modal'), {});
+const modalEle = document.getElementById('modal');
+const modalBtn = document.querySelector('#modal .btn-close');
+const slider = document.querySelector("#slider");
+const sliderInner = document.querySelector("#slider .carousel-inner");
+const tabs = document.querySelector("#tabs");
 modalBtn.onclick = forceStop;
 
 function getSlides(amount = 0, array = []) {
@@ -37,72 +38,59 @@ function createSlides(slides = [], slideTime = 3000) {
 
 function forceStop() {
   clearTimeout(cycle);
+  started = false;
   document.getElementById('modal').style.display = "none";
   sliderInner.innerHTML = "";
 }
 
 function start() {
+  // Check Config
+  var initType = tabs.querySelector('.active').value || "manual";
+
   // Config Values
-  var showColors = document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true';
-  var showNumbers = document.querySelector("#show-numbers").checked;
-  var showLetters = document.querySelector("#show-letters").checked;
+  const showColors = initType === "manual"
+    ? document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true'
+    : true;
+
+  const showNumbers =  initType === "manual"
+    ? document.querySelector("#show-numbers").checked
+    : true;
+
+  const showLetters =  initType === "manual"
+    ? document.querySelector("#show-letters").checked
+    : true;
 
   // Time values
-  var amount = document.querySelector("#amount").value;
-  var stimulus = document.querySelector("#stimulus").value * 1000;
-  var interval = document.querySelector("#interval").value;
+  const amount = initType === "manual"
+    ? document.querySelector("#amount").value
+    : 15;
+  const stimulus = initType === "manual"
+    ? document.querySelector("#stimulus").value * 1000
+    : 4 * 1000;
+  // const interval = document.querySelector("#interval").value;
+
   var totalAmount = amount * stimulus;
 
-  if(showColors || showNumbers || showLetters) {
+  if((showColors || showNumbers || showLetters) && !started) {
     // Starting
     var randomStack = [];
-    if(showColors) {
+    if(showColors && initType === "manual") {
       document.querySelectorAll(".btn-check.color").forEach(function(ele){
         if(ele.checked) randomStack.push(ele.value);
-      })
+      });
+    } else if(initType === "auto") {
+      randomStack = randomStack.concat(colors);
     }
+
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
-
     var selectedSlides = getSlides(amount, randomStack);
+    console.log(selectedSlides);
     createSlides(selectedSlides, stimulus);
     modalEle.style.display = "block";
 
     cycle = setTimeout(function() {
       forceStop();
     }, totalAmount);
-  }
-}
-
-
-// Get the button that opens manual configuration
-let config = document.getElementById("config-manual");
-
-// Get the button that closes manual configuration
-let hideConfig = document.getElementById("config-auto");
-
-// Get the manual configuration content
-let setConfig = document.getElementById("config-manual-detail");
-
-let setColors = document.getElementById("show-colors");
-let selectColors = document.getElementById("select-colors")
-
-// When the user clicks on "Manual" open content
-config.onclick = function() {
-  if (config.style.display = "none") {
-    setConfig.style.display = "block"
-  }
-}
-
-// When the user clicks on "Automática", close it
-hideConfig.onclick = function() {
-  if (config.style.display = "block") {
-    setConfig.style.display = "none"
-  }
-}
-
-setColors.onclick = function() {
-  if (selectColors.style.display = "none") {
-    selectColors.style.display = "block"
   }
 }

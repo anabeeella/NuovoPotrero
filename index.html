@@ -32,16 +32,18 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="manual" role="tabpanel">
                     <article class="px-5 py-3 mb-5 border border-dark m-auto rounded-3">
-                        <div class="mb-3">
-                            <p><strong>Mostrar:</strong></p>
+                        <div class="mb-5">
+                            <p><strong>Mostrar</strong></p>
                             <button data-bs-toggle="collapse" data-bs-target="#colorWrapper" role="button" id="show-colors" class="btn btn-outline-dark m-2" aria-expanded="false">Colores</button>
                             <input type="checkbox" class="btn-check" id="show-numbers">
                             <label class="btn btn-outline-dark m-2" for="show-numbers">Números</label>
                             <input type="checkbox" class="btn-check" id="show-letters">
                             <label class="btn btn-outline-dark m-2" for="show-letters">Letras</label>
+                            <p class="text-muted">Para comenzar en el modo manual <strong>debe haber al menos un tipo de estímulo seleccionado</strong></p>
+
                         </div>
                         <div class="collapse mb-3" id="colorWrapper">
-                            <p><strong>Seleccionar colores:</strong></p>
+                            <p><strong>Seleccionar colores</strong></p>
                             <input class="btn-check color" value="red" id="red" type="checkbox" checked>
                             <label class="btn btn-outline-danger m-2 p-4" for="red"></label>
                             <input class="btn-check color" value="yellow" id="yellow" type="checkbox" checked>
@@ -53,16 +55,16 @@
                         </div>
                         <div id="set-duration" class="mb-3">
                             <p><strong>Duración:</strong></p>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center mb-2">
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="amount">Cantidad de Estímulos</label>
-                                        <input type="number" id="amount" value="0" min="0" class="duration-estimulo d-inline form-control">
+                                        <input type="number" id="amount" value="0" min="10" class="duration-estimulo d-inline form-control">
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="stimulus">Estímulo en segundos: </label>
+                                        <label for="stimulus">Duración de cada estímulo en segundos</label>
                                         <input type="number" min="0" id="stimulus" value="3" class="duration-estimulo d-inline form-control">
                                     </div>
                                 </div>
@@ -73,6 +75,7 @@
                                     </div>
                                 </div> -->
                             </div>
+                            <p class="text-muted">La <strong>cantidad de estímulos y su duración deben ser mayor a cero</strong> para comenzar</p>
                         </div>
                     </article>
                 </div>

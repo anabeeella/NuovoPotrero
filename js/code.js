@@ -84,11 +84,10 @@ function start() {
 
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
-    var selectedSlides = getSlides(amount, randomStack);
-    console.log(selectedSlides);
-    createSlides(selectedSlides, stimulus);
-    modalEle.style.display = "block";
 
+    createSlides(getSlides(amount, randomStack), stimulus);
+    modalEle.style.display = "block";
+    start = true;
     cycle = setTimeout(function() {
       forceStop();
     }, totalAmount);

@@ -30,16 +30,22 @@ function getSlides(amount = 0, array = []) {
 }
 
 function createSlides(slides = [], slideTime = 3000) {
-  var slidesHTML = '<div id="slider" class="carousel" data-bs-ride="carousel"><div class="carousel-inner">';
+  var sliderId = "slider" + Math.floor(Math.random() * 20);
+  var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-bs-ride="carousel"><div class="carousel-inner">';
   slides.forEach(function(item, index) {
     var isColor = colors.indexOf(item) !== -1;
     var isFirst = index === 0;
-    slidesHTML += "<div data-bs-interval='" + slideTime + "' class='carousel-item " + (isFirst ? "active" : "") + "'><div class='slide " + (isColor ? "is-color is-" + item : "")  + "'>" + item + "</div></div>";
+    slidesHTML += "<div class='carousel-item " + (isFirst ? "active" : "") + "'><div class='slide " + (isColor ? "is-color is-" + item : "")  + "'>" + item + "</div></div>";
   });
   slidesHTML += "</div></div>";
-  console.log(slidesHTML);
   modalBody.insertAdjacentHTML("beforeend", slidesHTML);
-  bootstrap.Carousel.getOrCreateInstance(document.querySelector('#modal .carousel'));
+  var carousel = bootstrap.Carousel.getOrCreateInstance(document.querySelector('#modal .carousel'), {
+    interval: slideTime,
+    pause: false,
+    wrap: false,
+  });
+  carousel.to(0);
+  carousel.cycle();
 }
 
 function forceStop() {

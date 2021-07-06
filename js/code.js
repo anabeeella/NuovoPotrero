@@ -3,7 +3,7 @@ let started = false;
 
 const letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
 const numbers = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ];
-const colors =  [ "red", "yellow", "green", "blue" ];
+const colors =  [ "red", "yellow", "green", "blue", "purple", "orange" ];
 
 // Get the modal
 const modal = new bootstrap.Modal(document.getElementById('modal'), {});
@@ -19,9 +19,14 @@ function getSlides(amount = 0, array = []) {
 
   var chosen = [];
   for (var i = 0; i < amount; i++) {
-    var randomIndex = Math.floor(Math.random() * array.length);
+    var randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * array.length);
+    } while(chosen[chosen.length-1] == array[randomIndex]);
+
     chosen.push(array[randomIndex]);
   }
+  console.log(chosen);
   return chosen;
 }
 
@@ -87,7 +92,7 @@ function start() {
 
     createSlides(getSlides(amount, randomStack), stimulus);
     modalEle.style.display = "block";
-    start = true;
+    started = true;
     cycle = setTimeout(function() {
       forceStop();
     }, totalAmount);

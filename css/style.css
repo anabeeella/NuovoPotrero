@@ -1,3 +1,64 @@
+.btn-outline-purple {
+    color:var(--bs-purple);
+    border-color:var(--bs-purple)
+}
+
+.btn-outline-purple:hover {
+    color:#fff;
+    background-color:var(--bs-purple);
+    border-color:var(--bs-purple)
+}
+
+.btn-check:focus+.btn-outline-purple, .btn-outline-purple:focus {
+    box-shadow:0 0 0 .25rem rgba(111, 66, 193,.5)
+}
+
+.btn-check:active+.btn-outline-purple, .btn-check:checked+.btn-outline-purple, .btn-outline-purple.active, .btn-outline-purple.dropdown-toggle.show, .btn-outline-purple:active {
+    color:#fff;
+    background-color:var(--bs-purple);
+    border-color:var(--bs-purple)
+}
+
+.btn-check:active+.btn-outline-purple:focus, .btn-check:checked+.btn-outline-purple:focus, .btn-outline-purple.active:focus, .btn-outline-purple.dropdown-toggle.show:focus, .btn-outline-purple:active:focus {
+    box-shadow:0 0 0 .25rem rgba(111, 66, 193,.5)
+}
+
+.btn-outline-purple.disabled, .btn-outline-purple:disabled {
+    color:var(--bs-purple);
+    background-color:transparent
+}
+
+.btn-outline-orange {
+    color:var(--bs-orange);
+    border-color:var(--bs-orange)
+}
+
+.btn-outline-orange:hover {
+    color:#fff;
+    background-color:var(--bs-orange);
+    border-color:var(--bs-orange)
+}
+
+.btn-check:focus+.btn-outline-orange, .btn-outline-orange:focus {
+    box-shadow:0 0 0 .25rem rgba(253, 126, 20,.5)
+}
+
+.btn-check:active+.btn-outline-orange, .btn-check:checked+.btn-outline-orange, .btn-outline-orange.active, .btn-outline-orange.dropdown-toggle.show, .btn-outline-orange:active {
+    color:#fff;
+    background-color:var(--bs-orange);
+    border-color:var(--bs-orange)
+}
+
+.btn-check:active+.btn-outline-orange:focus, .btn-check:checked+.btn-outline-orange:focus, .btn-outline-orange.active:focus, .btn-outline-orange.dropdown-toggle.show:focus, .btn-outline-orange:active:focus {
+    box-shadow:0 0 0 .25rem rgba(253, 126, 20,.5)
+}
+
+.btn-outline-orange.disabled, .btn-outline-orange:disabled {
+    color:var(--bs-orange);
+    background-color:transparent
+}
+
+
 .btn-outline-dark[aria-expanded="true"] {
     background-color: var(--bs-dark);
     color: var(--bs-white);
@@ -60,6 +121,14 @@
 
 #slider .slide.is-color.is-blue {
     background-color: var(--bs-blue);
+}
+
+#slider .slide.is-color.is-orange {
+    background-color: var(--bs-orange);
+}
+
+#slider .slide.is-color.is-purple {
+    background-color: var(--bs-purple);
 }
 
 .carousel-item {

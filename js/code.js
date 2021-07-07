@@ -1,16 +1,19 @@
+"use strict";
+
 let cycle = null;
 let started = false;
 
-const letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
-const numbers = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ];
-const colors =  [ "red", "yellow", "green", "blue", "purple", "orange" ];
+var letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
+var numbers = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ];
+var colors =  [ "red", "yellow", "green", "blue", "purple", "orange" ];
+var fullStack = letters.concat(numbers.concat(colors));
 
 // Get the modal
-const modal = new bootstrap.Modal(document.getElementById('modal'), {});
-const modalEle = document.getElementById('modal');
-const modalBtn = document.querySelector('#modal .btn-close');
-const modalBody = document.querySelector('#modalBody');
-const tabs = document.querySelector("#tabs");
+var modal = new bootstrap.Modal(document.getElementById('modal'), {});
+var modalEle = document.getElementById('modal');
+var modalBtn = document.querySelector('#modal .btn-close');
+var modalBody = document.querySelector('#modalBody');
+var tabs = document.querySelector("#tabs");
 modalBtn.onclick = forceStop;
 
 function getSlides(amount = 0, array = []) {
@@ -29,19 +32,19 @@ function getSlides(amount = 0, array = []) {
   return chosen;
 }
 
-function createSlides(slides = [], slideTime = 3000) {
+function createSlides(slides = [], slideTime = 3000, isAuto = false) {
   var sliderId = "slider" + Math.floor(Math.random() * 20);
   var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-bs-ride="carousel"><div class="carousel-inner">';
   slides.forEach(function(item, index) {
-    var isColor = colors.indexOf(item) !== -1;
-    var isFirst = index === 0;
-    slidesHTML += "<div class='carousel-item " + (isFirst ? "active" : "") + "'><div class='slide " + (isColor ? "is-color is-" + item : "")  + "'>" + item + "</div></div>";
+    slidesHTML += makeSlide(item, index === 0);
   });
-  slidesHTML += "</div></div>";
+  slidesHTML += "</div>";
+  if(isAuto) slidesHTML += '<div class="slider-controller" onclick="nextRandomSlide(this)"></div>';
+  slidesHTML += "</div>";
   modalBody.insertAdjacentHTML("beforeend", slidesHTML);
   var carousel = bootstrap.Carousel.getOrCreateInstance(document.querySelector('#modal .carousel'), {
     interval: slideTime,
-    pause: false,
+    pause: isAuto,
     wrap: false,
   });
   carousel.to(0);
@@ -58,50 +61,68 @@ function forceStop() {
 function start() {
   // Check Config
   var initType = tabs.querySelector('.active').value || "manual";
+  var isManual = initType === "manual";
+  var isAuto = initType === "auto";
 
   // Config Values
-  const showColors = initType === "manual"
+  var showColors = isManual
     ? document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true'
     : true;
 
-  const showNumbers =  initType === "manual"
+  var showNumbers =  isManual
     ? document.querySelector("#show-numbers").checked
     : true;
 
-  const showLetters =  initType === "manual"
+  var showLetters =  isManual
     ? document.querySelector("#show-letters").checked
     : true;
 
   // Time values
-  const amount = initType === "manual"
+  var amount = isManual
     ? document.querySelector("#amount").value
-    : 15;
+    : 1;
 
-  const stimulus = initType === "manual"
+  var stimulus = isManual
     ? document.querySelector("#stimulus").value * 1000
-    : 4 * 1000;
+    : 0;
 
   var totalAmount = amount * stimulus;
 
   if((showColors || showNumbers || showLetters) && !started) {
     // Starting
     var randomStack = [];
-    if(showColors && initType === "manual") {
+    if(showColors && isManual) {
       document.querySelectorAll(".btn-check.color").forEach(function(ele){
         if(ele.checked) randomStack.push(ele.value);
       });
-    } else if(initType === "auto") {
+    } else if(isAuto) {
       randomStack = randomStack.concat(colors);
     }
 
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
 
-    createSlides(getSlides(amount, randomStack), stimulus);
+    createSlides(getSlides(amount, randomStack), stimulus, isAuto);
     modalEle.style.display = "block";
     started = true;
-    cycle = setTimeout(function() {
-      forceStop();
-    }, totalAmount);
+    if(isManual) {
+      cycle = setTimeout(function() {
+        forceStop();
+      }, totalAmount);
+    }
   }
+}
+
+function makeSlide(item, isFirst = false) {
+  var color = colors.indexOf(item) !== -1 ? " is-color is-" + item : "";
+  var active = isFirst ? " active" : "";
+  return "<div class='carousel-item" + active + "'><div class='slide" + color  + "'>" + item + "</div></div>"
+}
+
+function nextRandomSlide(controller) {
+  var randomIndex = Math.floor(Math.random() * fullStack.length);
+  var carousel = controller.parentNode;
+  carousel.querySelector('.carousel-inner').insertAdjacentHTML('beforeend', makeSlide(fullStack[randomIndex]));
+  (bootstrap.Carousel.getInstance(controller.parentNode)).next();
+  carousel.querySelector('.carousel-inner > *').remove();
 }

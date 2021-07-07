@@ -71,11 +71,6 @@
     border-radius: 0;
 }
 
-.modal .close{
-    font-weight: bold;
-    font-size: 2rem;
-}
-
 .modal-content {
     height: 100%;
     position: fixed;
@@ -142,4 +137,12 @@
 
 .slider * {
     user-select: none;
+}
+
+.slider .slider-controller {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }

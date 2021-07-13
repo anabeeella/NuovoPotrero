@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.extra.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Nuovo Potrero</title>
@@ -25,8 +26,8 @@
             <article class="mb-3" id="options-configuration">
                 <p class="fs-5">Configuración</p>
                 <div class="nav nav-tabs border-0 justify-content-center p-0" role="tablist" id="tabs">
-                    <button value="manual" data-bs-target="#manual" data-bs-toggle="tab" class="btn btn-outline-dark m-2 active">Manual</button>
-                    <button value="auto" data-bs-target="#auto" data-bs-toggle="tab" class="btn btn-outline-dark m-2">Automática</button>
+                    <button value="manual" data-target="#manual" data-toggle="tab" class="btn btn-outline-dark m-2 active">Manual</button>
+                    <button value="auto" data-target="#auto" data-toggle="tab" class="btn btn-outline-dark m-2">Automática</button>
                 </div>
             </article>
             <div class="tab-content">
@@ -34,7 +35,7 @@
                     <article class="px-5 py-3 mb-5 border border-dark m-auto rounded-3">
                         <div class="mb-5">
                             <p><strong>Mostrar</strong></p>
-                            <button data-bs-toggle="collapse" data-bs-target="#colorWrapper" role="button" id="show-colors" class="btn btn-outline-dark m-2" aria-expanded="false">Colores</button>
+                            <button data-toggle="collapse" data-target="#colorWrapper" role="button" id="show-colors" class="btn btn-outline-dark m-2" aria-expanded="false">Colores</button>
                             <input type="checkbox" class="btn-check" id="show-numbers">
                             <label class="btn btn-outline-dark m-2" for="show-numbers">Números</label>
                             <input type="checkbox" class="btn-check" id="show-letters">
@@ -87,10 +88,10 @@
                     <!-- <article class="px-3 py-5 mb-5 border border-dark m-auto rounded-3"></article> -->
                 </div>
             </div>
-            <button class="animated wobble btn btn-success mt-3 fs-5" onclick="start();">Empezar</button>
+            <button class="animated wobble btn btn-success mt-3 fs-5" onclick="start ? start() : false;">Empezar</button>
         </section>
-        <div id="modal" class="modal show" data-bs-ride="modal">
-            <button data-bs-dismiss="modal" class="btn-close"></button>
+        <div id="modal" class="modal show" data-ride="modal">
+            <button data-dismiss="modal" class="btn btn-close">&times;</button>
             <!-- Modal content -->
             <div class="modal-content">
                 <div id="modalBody">
@@ -99,6 +100,7 @@
         </div>
     </main>
 
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/code.js"></script>
 </body>

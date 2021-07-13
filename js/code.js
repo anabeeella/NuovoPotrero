@@ -7,14 +7,15 @@ var colors =  [ "red", "yellow", "green", "blue", "purple", "orange" ];
 var fullStack = letters.concat(numbers.concat(colors));
 
 // Get the modal
-var modal = new bootstrap.Modal(document.getElementById('modal'), {});
 var modalEle = document.getElementById('modal');
 var modalBtn = document.querySelector('#modal .btn-close');
 var modalBody = document.querySelector('#modalBody');
 var tabs = document.querySelector("#tabs");
 modalBtn.onclick = forceStop;
 
-function getSlides(amount = 0, array = []) {
+function getSlides(amount, array) {
+  amount = amount || 0;
+  array = array || 0;
   if(array === [] || amount <= 0) return [];
 
   var chosen = [];
@@ -30,7 +31,10 @@ function getSlides(amount = 0, array = []) {
   return chosen;
 }
 
-function createSlides(slides = [], slideTime = 3000, isAuto = false) {
+function createSlides(slides, slideTime, isAuto) {
+  slides = slides || [];
+  isAuto = isAuto || false;
+  slideTime = slideTime || 3000;
   var sliderId = "slider" + Math.floor(Math.random() * 20);
   var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-ride="carousel"><div class="carousel-inner">';
   slides.forEach(function(item, index) {
@@ -110,7 +114,8 @@ function start() {
   }
 }
 
-function makeSlide(item, isFirst = false) {
+function makeSlide(item, isFirst) {
+  isFirst = isFirst || false;
   var color = colors.indexOf(item) !== -1 ? " is-color is-" + item : "";
   var active = isFirst ? " active" : "";
   return "<div class='carousel-item" + active + "'><div class='slide" + color  + "'>" + item + "</div></div>"

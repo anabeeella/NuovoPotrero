@@ -64,13 +64,13 @@
                         <div id="set-duration" class="mb-3">
                             <p><strong>Duración:</strong></p>
                             <div class="row justify-content-center mb-2">
-                                <div class="col-4">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="amount">Cantidad de Estímulos</label>
                                         <input type="number" id="amount" value="10" min="0" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="stimulus">Duración de cada estímulo en segundos</label>
                                         <input type="number" id="stimulus" value="3" min="0" class="form-control">
@@ -83,6 +83,9 @@
                                     </div>
                                 </div> -->
                             </div>
+                            <label for="paused">
+                                <input type="checkbox" name="paused" id="paused"> Empezar en pausa
+                            </label>
                             <p class="text-muted">La <strong>cantidad de estímulos y su duración deben ser mayor a cero</strong> para comenzar</p>
                         </div>
                     </article>
@@ -94,7 +97,7 @@
             <button class="animated wobble btn btn-success mt-3 fs-5" onclick="start ? start() : false;">Empezar</button>
         </section>
         <div id="modal" class="modal show" data-ride="modal">
-            <button data-dismiss="modal" class="btn btn-close">&times;</button>
+            <button data-dismiss="modal" class="btn btn-dark btn-close">&times;</button>
             <!-- Modal content -->
             <div class="modal-content">
                 <div id="modalBody">

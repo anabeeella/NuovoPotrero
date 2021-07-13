@@ -31,10 +31,12 @@ function getSlides(amount, array) {
   return chosen;
 }
 
-function createSlides(slides, slideTime, isAuto) {
+function createSlides(slides, slideTime, isAuto, startPaused) {
   slides = slides || [];
   isAuto = isAuto || false;
   slideTime = slideTime || 3000;
+  startPaused = startPaused || false;
+  var totalAmount = slides.length * slideTime;
   var sliderId = "slider" + Math.floor(Math.random() * 20);
   var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-ride="carousel"><div class="carousel-inner">';
   slides.forEach(function(item, index) {
@@ -43,13 +45,17 @@ function createSlides(slides, slideTime, isAuto) {
   slidesHTML += "</div>";
   if(isAuto) slidesHTML += '<div class="slider-controller" onclick="nextRandomSlide(this)"></div>';
   slidesHTML += "</div>";
+  if(startPaused) slidesHTML += '<button onclick="forceCycle(' + totalAmount + ', this);" class="btn btn-dark btn-start btn-large">▶</button>';
   modalBody.insertAdjacentHTML("beforeend", slidesHTML);
+
+  console.log(isAuto || startPaused);
 
   $('#modal .carousel').carousel({
     interval: slideTime,
-    pause: isAuto,
+    pause: isAuto || startPaused,
     wrap: false,
   });
+  if(startPaused) $('#modal .carousel').carousel('pause');
 }
 
 function forceStop() {
@@ -87,6 +93,11 @@ function start() {
     ? document.querySelector("#stimulus").value * 1000
     : 0;
 
+  // Paused
+  var paused = isManual
+    ? document.querySelector("#paused").checked
+    : false;
+
   var totalAmount = amount * stimulus;
 
   if((showColors || showNumbers || showLetters) && !started) {
@@ -103,14 +114,10 @@ function start() {
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
 
-    createSlides(getSlides(amount, randomStack), stimulus, isAuto);
+    createSlides(getSlides(amount, randomStack), stimulus, isAuto, paused);
     modalEle.style.display = "block";
     started = true;
-    if(isManual) {
-      cycle = setTimeout(function() {
-        forceStop();
-      }, totalAmount);
-    }
+    if(isManual && !paused) cycleTimeout(totalAmount);
   }
 }
 
@@ -127,4 +134,20 @@ function nextRandomSlide(controller) {
   carousel.querySelector('.carousel-inner').insertAdjacentHTML('beforeend', makeSlide(fullStack[randomIndex]));
   $('#modal .carousel').carousel('next');
   carousel.querySelector('.carousel-inner > *').remove();
+}
+
+function cycleTimeout(at) {
+  cycle = setTimeout(function() {
+    forceStop();
+  }, at);
+}
+
+function cycleCarousel() {
+  $('#modal .carousel').carousel('cycle');
+}
+
+function forceCycle(amount, ele) {
+  $(ele).remove();
+  cycleCarousel();
+  cycleTimeout(amount);
 }

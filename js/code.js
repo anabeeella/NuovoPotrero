@@ -31,16 +31,17 @@ function getSlides(amount, array) {
   return chosen;
 }
 
-function createSlides(slides, slideTime, isAuto, startPaused) {
+function createSlides(slides, slideTime, isAuto, startPaused, hasDeadTime) {
   slides = slides || [];
   isAuto = isAuto || false;
   slideTime = slideTime || 3000;
   startPaused = startPaused || false;
+  hasDeadTime = hasDeadTime || 0;
   var totalAmount = slides.length * slideTime;
   var sliderId = "slider" + Math.floor(Math.random() * 20);
   var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-ride="carousel"><div class="carousel-inner">';
   for(var index = 0; index < slides.length; index++) {
-    slidesHTML += makeSlide(slides[index], index === 0);
+    slidesHTML += makeSlide(slides[index], index === 0, slideTime, hasDeadTime, index === slides.length);
   }
   slidesHTML += "</div>";
   if(isAuto) slidesHTML += '<div class="slider-controller" onclick="nextRandomSlide(this)"></div>';
@@ -49,7 +50,7 @@ function createSlides(slides, slideTime, isAuto, startPaused) {
   modalBody.insertAdjacentHTML("beforeend", slidesHTML);
 
   $('#modal .carousel').carousel({
-    interval: slideTime,
+    // interval: slideTime,
     pause: isAuto || startPaused,
     wrap: false,
   });
@@ -91,12 +92,16 @@ function start() {
     ? document.querySelector("#stimulus").value * 1000
     : 0;
 
+  var deadTime = isManual
+    ? document.querySelector("#deadTime").value * 1000
+    : 0;
+
   // Paused
   var paused = isManual
     ? document.querySelector("#paused").checked
     : false;
 
-  var totalAmount = amount * stimulus;
+  var totalAmount = amount * stimulus + (deadTime * (amount - 1));
 
   if((showColors || showNumbers || showLetters) && !started) {
     // Starting
@@ -114,18 +119,25 @@ function start() {
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
 
-    createSlides(getSlides(amount, randomStack), stimulus, isAuto, paused);
+    createSlides(getSlides(amount, randomStack), stimulus, isAuto, paused, deadTime);
     modalEle.style.display = "block";
     started = true;
     if(isManual && !paused) cycleTimeout(totalAmount);
   }
 }
 
-function makeSlide(item, isFirst) {
+function makeSlide(item, isFirst, interval, hasDeadTime, isLast) {
   isFirst = isFirst || false;
+  isLast = isLast || false;
+  interval = interval || 0;
+  hasDeadTime = hasDeadTime || 0;
   var color = colors.indexOf(item) !== -1 ? " is-color is-" + item : "";
   var active = isFirst ? " active" : "";
-  return "<div class='carousel-item" + active + "'><div class='slide" + color  + "'>" + item + "</div></div>"
+  var dataInterval = interval > 0 ? ' data-interval="' + interval + '"' : '';
+  var slide = '<div class="carousel-item' + active + '"'+ dataInterval + '><div class="slide' + color  + '">' + item + '</div></div>';
+  if(hasDeadTime > 0 && !isLast) slide += '<div class="carousel-item" data-interval="' + hasDeadTime + '"><div class="slide is-dead">intervalo</div></div>';
+
+  return slide;
 }
 
 function nextRandomSlide(controller) {

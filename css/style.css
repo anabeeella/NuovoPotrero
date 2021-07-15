@@ -69,7 +69,8 @@ body {
     font-family: sans-serif;
 }
 
-.slider .slide.is-color {
+.slider .slide.is-color,
+.slider .slide.is-dead {
     font-size: 0;
 }
 
@@ -95,6 +96,10 @@ body {
 
 .slider .slide.is-color.is-purple {
     background-color:  #6f42c1;
+}
+
+.slider .slide.is-dead {
+    background-color:  #000000;
 }
 
 .carousel-item {

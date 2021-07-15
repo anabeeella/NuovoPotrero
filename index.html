@@ -76,12 +76,12 @@
                                         <input type="number" id="stimulus" value="3" min="0" class="form-control">
                                     </div>
                                 </div>
-                                <!-- <div class="col">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="interval">Intervalo en segundos: </label>
-                                        <input type="number" min="0" id="interval" class="duration-estimulo d-inline form-control">
+                                        <label for="deatTime">Tiempo muerto: </label>
+                                        <input type="number" min="0" id="deadTime" value="0" class="duration-estimulo d-inline form-control">
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                             <label for="paused">
                                 <input type="checkbox" name="paused" id="paused"> Empezar en pausa
@@ -90,9 +90,7 @@
                         </div>
                     </article>
                 </div>
-                <div class="tab-pane" id="auto" role="tabpanel">
-                    <!-- <article class="px-3 py-5 mb-5 border border-dark m-auto rounded-3"></article> -->
-                </div>
+                <div class="tab-pane" id="auto" role="tabpanel"></div>
             </div>
             <button class="animated wobble btn btn-success mt-3 fs-5" onclick="start ? start() : false;">Empezar</button>
         </section>

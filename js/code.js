@@ -27,7 +27,7 @@ function getSlides(amount, array) {
 
     chosen.push(array[randomIndex]);
   }
-  console.log(chosen);
+
   return chosen;
 }
 
@@ -39,16 +39,14 @@ function createSlides(slides, slideTime, isAuto, startPaused) {
   var totalAmount = slides.length * slideTime;
   var sliderId = "slider" + Math.floor(Math.random() * 20);
   var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-ride="carousel"><div class="carousel-inner">';
-  slides.forEach(function(item, index) {
-    slidesHTML += makeSlide(item, index === 0);
-  });
+  for(var index = 0; index < slides.length; index++) {
+    slidesHTML += makeSlide(slides[index], index === 0);
+  }
   slidesHTML += "</div>";
   if(isAuto) slidesHTML += '<div class="slider-controller" onclick="nextRandomSlide(this)"></div>';
   slidesHTML += "</div>";
   if(startPaused) slidesHTML += '<button onclick="forceCycle(' + totalAmount + ', this);" class="btn btn-dark btn-start btn-large">▶</button>';
   modalBody.insertAdjacentHTML("beforeend", slidesHTML);
-
-  console.log(isAuto || startPaused);
 
   $('#modal .carousel').carousel({
     interval: slideTime,
@@ -104,9 +102,11 @@ function start() {
     // Starting
     var randomStack = [];
     if(showColors && isManual) {
-      document.querySelectorAll(".btn-check.color").forEach(function(ele){
+      var colorsArray = document.querySelectorAll(".btn-check.color");
+      for(var i = 0; i < colorsArray.length; i++) {
+        var ele = colorsArray[i];
         if(ele.checked) randomStack.push(ele.value);
-      });
+      }
     } else if(isAuto) {
       randomStack = randomStack.concat(colors);
     }

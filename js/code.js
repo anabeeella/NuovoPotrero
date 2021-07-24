@@ -31,7 +31,7 @@ function getSlides(amount, array) {
   return chosen;
 }
 
-function createSlides(slides, slideTime, isAuto, startPaused, hasDeadTime) {
+function createSlides(slides, slideTime, isAuto, startPaused, hasDeadTime, stack) {
   slides = slides || [];
   isAuto = isAuto || false;
   slideTime = slideTime || 3000;
@@ -41,7 +41,7 @@ function createSlides(slides, slideTime, isAuto, startPaused, hasDeadTime) {
   var sliderId = "slider" + Math.floor(Math.random() * 20);
   var slidesHTML = '<div id="' +sliderId+ '" class="carousel slider" data-ride="carousel"><div class="carousel-inner">';
   for(var index = 0; index < slides.length; index++) {
-    slidesHTML += makeSlide(slides[index], index === 0, slideTime, hasDeadTime, index === slides.length);
+    slidesHTML += makeSlide(slides[index], index === 0, index === slides.length, slideTime, hasDeadTime);
   }
   slidesHTML += "</div>";
   if(isAuto) slidesHTML += '<div class="slider-controller" onclick="nextRandomSlide(this)"></div>';
@@ -53,7 +53,7 @@ function createSlides(slides, slideTime, isAuto, startPaused, hasDeadTime) {
     // interval: slideTime,
     pause: isAuto || startPaused,
     wrap: false,
-  });
+  }).data('stack', JSON.stringify(stack));
   if(startPaused) $('#modal .carousel').carousel('pause');
 }
 
@@ -71,17 +71,9 @@ function start() {
   var isAuto = initType === "auto";
 
   // Config Values
-  var showColors = isManual
-    ? document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true'
-    : true;
-
-  var showNumbers =  isManual
-    ? document.querySelector("#show-numbers").checked
-    : true;
-
-  var showLetters =  isManual
-    ? document.querySelector("#show-letters").checked
-    : true;
+  var showColors = document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true';
+  var showNumbers = document.querySelector("#show-numbers").checked;
+  var showLetters = document.querySelector("#show-letters").checked;
 
   // Time values
   var amount = isManual
@@ -106,27 +98,23 @@ function start() {
   if((showColors || showNumbers || showLetters) && !started) {
     // Starting
     var randomStack = [];
-    if(showColors && isManual) {
-      var colorsArray = document.querySelectorAll(".btn-check.color");
-      for(var i = 0; i < colorsArray.length; i++) {
-        var ele = colorsArray[i];
-        if(ele.checked) randomStack.push(ele.value);
-      }
-    } else if(isAuto) {
-      randomStack = randomStack.concat(colors);
-    }
+
+    // Colors
+    $(".btn-check.color").each(function() {
+      if($(this).prop('checked')) randomStack.push($(this).val());
+    })
 
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
 
-    createSlides(getSlides(amount, randomStack), stimulus, isAuto, paused, deadTime);
+    createSlides(getSlides(amount, randomStack), stimulus, isAuto, paused, deadTime, randomStack);
     modalEle.style.display = "block";
     started = true;
     if(isManual && !paused) cycleTimeout(totalAmount);
   }
 }
 
-function makeSlide(item, isFirst, interval, hasDeadTime, isLast) {
+function makeSlide(item, isFirst, isLast, interval, hasDeadTime) {
   isFirst = isFirst || false;
   isLast = isLast || false;
   interval = interval || 0;
@@ -141,11 +129,16 @@ function makeSlide(item, isFirst, interval, hasDeadTime, isLast) {
 }
 
 function nextRandomSlide(controller) {
-  var randomIndex = Math.floor(Math.random() * fullStack.length);
-  var carousel = controller.parentNode;
-  carousel.querySelector('.carousel-inner').insertAdjacentHTML('beforeend', makeSlide(fullStack[randomIndex]));
-  $('#modal .carousel').carousel('next');
-  carousel.querySelector('.carousel-inner > *').remove();
+  var carousel = $(controller.parentNode);
+  var stack = JSON.parse(carousel.data('stack'));
+  var randomIndex = Math.floor(Math.random() * stack.length);
+  carousel
+    .find('.carousel-inner')
+    .append(makeSlide(stack[randomIndex]))
+    .parent()
+    .carousel('next')
+    .find('.carousel-inner > :first-child')
+    .remove();
 }
 
 function cycleTimeout(at) {

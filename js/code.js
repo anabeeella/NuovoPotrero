@@ -71,9 +71,11 @@ function start() {
   var isAuto = initType === "auto";
 
   // Config Values
-  var showColors = document.querySelector("#show-colors").getAttribute('aria-expanded') === 'true';
+  var showColors = document.querySelector("#show-colors").getAttribute('aria-expanded') == 'true';
   var showNumbers = document.querySelector("#show-numbers").checked;
   var showLetters = document.querySelector("#show-letters").checked;
+
+  console.log(showColors);
 
   // Time values
   var amount = isManual
@@ -100,9 +102,11 @@ function start() {
     var randomStack = [];
 
     // Colors
-    $(".btn-check.color").each(function() {
-      if($(this).prop('checked')) randomStack.push($(this).val());
-    })
+    if(showColors) {
+      $(".btn-check.color").each(function() {
+        if($(this).prop('checked')) randomStack.push($(this).val());
+      })
+    }
 
     if(showNumbers) randomStack = randomStack.concat(numbers);
     if(showLetters) randomStack = randomStack.concat(letters);
